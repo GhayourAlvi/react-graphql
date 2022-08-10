@@ -18,7 +18,8 @@ function GetJobs() {
   }, [data]);
 
   return (
-    <div>
+    <div className="viewjob">
+      
       <h1>Jobs</h1>
       <div className="item-container">
         {jobs.map((job) => (

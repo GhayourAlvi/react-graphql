@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import "../App.css";
 import { JobsContext } from "../Contexts/JobsContext";
 import { CREATE_JOBPOST_MUTATION } from "../Graphql/Mutations";
-import SweetAlert from 'react-bootstrap-sweetalert';
+import Swal from "sweetalert2";
 import {
   ApolloClient,
   InMemoryCache,
@@ -53,7 +53,8 @@ function PostJobForm() {
     link: link,
   });
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    
     const res = await createJob({
       variables: {
         title: title,
@@ -67,19 +68,31 @@ function PostJobForm() {
     });
 
     if (res) {
-      swal({
-        title: `Job has been successfully Posted`,
+      Swal.fire({
+        position: "center",
         icon: "success",
+        title: "Job has been successfully posted",
+        showConfirmButton: false,
+        timer: 1500,
       });
     }
 
     if (error) {
       console.log(error);
     }
+
+    setTitle("")
+    setApplyUrl("")
+    setCompanyName("")
+    setDescription("")
+    setLocationName("")
+    setUserEmail("")
+    
   };
 
   return (
     <div className="postjob">
+     
       <h1> Post Job</h1>
       <Form>
         <Form.Group className="mb-3">
@@ -144,7 +157,7 @@ function PostJobForm() {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit" onSubmit={handleSubmit}>
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
       </Form>
