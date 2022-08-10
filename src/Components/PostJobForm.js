@@ -3,15 +3,17 @@ import { Form, Table } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import "../App.css";
 import { JobsContext } from "../Contexts/JobsContext";
+import { CREATE_JOBPOST_MUTATION } from "../Graphql/Mutations";
+import SweetAlert from 'react-bootstrap-sweetalert';
 import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    HttpLink,
-    from,
-  } from "@apollo/client";
-  import { onError } from "@apollo/client/link/error";
-
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  HttpLink,
+  from,
+} from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
+import { useMutation } from "@apollo/client";
 function PostJobForm() {
   const {
     title,
@@ -28,8 +30,10 @@ function PostJobForm() {
     setDescription,
     applyUrl,
     setApplyUrl,
-    jobs, setJobs
+    jobs,
+    setJobs,
   } = useContext(JobsContext);
+  const [createJob, { error }] = useMutation(CREATE_JOBPOST_MUTATION);
 
   const errorLink = onError(({ graphqlErrors, networkError }) => {
     if (graphqlErrors) {
@@ -38,35 +42,45 @@ function PostJobForm() {
       });
     }
   });
-  
+
   const link = from([
     errorLink,
     new HttpLink({ uri: "https://api.graphql.jobs/" }),
   ]);
-  
+
   const client = new ApolloClient({
     cache: new InMemoryCache(),
     link: link,
-  })
+  });
 
-  const handleSubmit = () => {
-    const job = {
-      title,
-      commitmentId,
-      companyName,
-      locationName,
-      userEmail,
-      description,
-      applyUrl,
-    };
-  
-    setJobs(job)
-    console.warn({jobs})
+  const handleSubmit = async () => {
+    const res = await createJob({
+      variables: {
+        title: title,
+        commitmentId: commitmentId,
+        companyName: companyName,
+        locationNames: locationName,
+        userEmail: userEmail,
+        description: description,
+        applyUrl: applyUrl,
+      },
+    });
+
+    if (res) {
+      swal({
+        title: `Job has been successfully Posted`,
+        icon: "success",
+      });
+    }
+
+    if (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <div className="postjob" >
-        <h1> Post Job</h1>
+    <div className="postjob">
+      <h1> Post Job</h1>
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Job Title</Form.Label>
@@ -75,7 +89,7 @@ function PostJobForm() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           ></Form.Control>
-        </Form.Group >
+        </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Committment ID</Form.Label>
           <Form.Control
@@ -106,7 +120,7 @@ function PostJobForm() {
         <Form.Group className="mb-3">
           <Form.Label>User Email</Form.Label>
           <Form.Control
-            type="text"
+            type="email"
             value={userEmail}
             onChange={(e) => setUserEmail(e.target.value)}
           />
@@ -130,7 +144,7 @@ function PostJobForm() {
           />
         </Form.Group>
 
-        <Button variant="primary" onClick={handleSubmit}>
+        <Button variant="primary" type="submit" onSubmit={handleSubmit}>
           Submit
         </Button>
       </Form>

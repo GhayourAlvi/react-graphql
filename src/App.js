@@ -1,6 +1,6 @@
-import react, {useState, useEffect, useContext} from 'react';
-import './App.css';
-import PostJobForm from './Components/PostJobForm';
+import react, { useState, useEffect, useContext } from "react";
+import "./App.css";
+import PostJobForm from "./Components/PostJobForm";
 import {
   ApolloClient,
   InMemoryCache,
@@ -9,8 +9,13 @@ import {
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import ViewJobForm from './Components/ViewJobForm'
-import {JobsContext} from "./Contexts/JobsContext"
+import ViewJobForm from "./Components/ViewJobForm";
+import { JobsContext } from "./Contexts/JobsContext";
+import Container from "react-bootstrap/Container";
+import { Router, Routes, Route } from "react-router-dom";
+import Nav from "./Components/NavBar/Navbar";
+import Jobs from "./Components/Jobs";
+import Postjob from "./Components/Postjob"
 
 const errorLink = onError(({ graphqlErrors, networkError }) => {
   if (graphqlErrors) {
@@ -27,11 +32,11 @@ const link = from([
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: link,
-}); 
+});
 
 function App() {
   
-  const [jobs, setJobs] = useState();
+  const [jobs, setJobs] = useState([]);
   const [title, setTitle] = useState();
   const [commitmentId, setCommitmentId] = useState("cjtu8esth000z0824x00wtp1i");
   const [companyName, setCompanyName] = useState();
@@ -39,29 +44,43 @@ function App() {
   const [userEmail, setUserEmail] = useState();
   const [description, setDescription] = useState();
   const [applyUrl, setApplyUrl] = useState();
-   
-  return (
 
-    <div>
-      <JobsContext.Provider value={
-         {title, setTitle,
-         commitmentId, setCommitmentId,
-          companyName, setCompanyName, 
-          locationName, setLocationName, 
-          userEmail, setUserEmail,
-          description, setDescription,
-          applyUrl, setApplyUrl,
-          jobs, setJobs
-         }
-        }>
-      <PostJobForm/>
-      </JobsContext.Provider>
-       {/* <ApolloProvider client={client}>
+  return (
+    <div className="w-100">
      
-      <ViewJobForm />
+      <JobsContext.Provider
+        value={{
+          title,
+          setTitle,
+          commitmentId,
+          setCommitmentId,
+          companyName,
+          setCompanyName,
+          locationName,
+          setLocationName,
+          userEmail,
+          setUserEmail,
+          description,
+          setDescription,
+          applyUrl,
+          setApplyUrl,
+          jobs,
+          setJobs,
+        }}
+      >
+       
+        <Container fluid>
+          <Nav />
+          <Container text>
+            <Routes>
+              <Route exact path="/" element={<Jobs />} />
+              <Route exact path="/view" element={<Jobs/>} />
+              <Route exact path="/post" element={<Postjob/>} />
+            </Routes>
+          </Container>
+        </Container>
       
-    </ApolloProvider> */}
-    
+      </JobsContext.Provider>
     </div>
   );
 }

@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import { useQuery, gql } from "@apollo/client";
 import { LOAD_JOBS } from "../Graphql/Queries";
 import "../App.css";
 import Button from "react-bootstrap/Button";
+import { JobsContext } from "../Contexts/JobsContext";
 function GetJobs() {
+  // const {
+  //   jobs, setJobs
+  // } = useContext(JobsContext);
+
   const { error, loading, data } = useQuery(LOAD_JOBS);
   const [jobs, setJobs] = useState([]);
   useEffect(() => {
@@ -30,13 +35,6 @@ function GetJobs() {
         ))}
       </div>
     </div>
-    // <div>
-    //      <h1>Jobs</h1>
-    //   {" "}
-    //   {jobs.map((val) => {
-    //     return <h1> {val.title}</h1>;
-    //   })}
-    // </div>
   );
 }
 

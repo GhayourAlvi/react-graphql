@@ -1,29 +1,39 @@
 import { gql } from "@apollo/client";
 
 export const CREATE_JOBPOST_MUTATION = gql`
-mutation{
-    postJob(input: {
-      title: "Developer",
-      commitmentId: "cjtu8esth000z0824x00wtp1i",
-      companyName: {
-        name: "Demo Company"
-      },
-      locationNames: "Lahore",
-      userEmail: "demo@gmail.com",
-      description: "This is demo role",
-      applyUrl: "https://googl.com"
-    })
-    {
-      id
+mutation postJob(
+  $title: String!,
+  $commitmentId: ID!,
+  $companyName: String!,
+  $locationNames: String!,
+  $userEmail: String!,
+  $description: String!,
+  $applyUrl: String!
+){
+  postJob( 
+      input: {
+          title: $title,
+          commitmentId: $commitmentId,
+          companyName: $companyName,
+          locationNames: $locationNames,
+          userEmail: $userEmail,
+          description: $description,
+          applyUrl: $applyUrl
+      }){
+      id,
       title
-      slug
-      locationNames
-      company{
-        name
-      }
-      userEmail
-      description
-      applyUrl
-    }
   }
+}
 `;
+
+
+
+// export const CREATE_JOB = gql`
+//   mutation postJob($title: String!, $id: ID!, $slug: String!, $locationNames: String!,  $company: String,  $userEmail: String, $description: String, $applyUrl: String,) {
+//     postJob(title: $title, : $username, password: $password) {
+//       id
+//       name
+//       username
+//     }
+//   }
+// `;
