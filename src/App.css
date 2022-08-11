@@ -44,7 +44,7 @@
 align-items: center;
  margin: 50px auto;
 width: 600px;
-height: 750px;
+height: 880px;
 border-radius: 5px;
 padding: 1em;
 box-shadow: rgba(65, 62, 62, 0.2) 0px 2px 8px 0px;
@@ -54,7 +54,6 @@ box-shadow: rgba(65, 62, 62, 0.2) 0px 2px 8px 0px;
 
   align-items: center;
    margin: 50px auto;
- 
   height: 750px;
   border-radius: 5px;
   padding: 1em;
@@ -74,13 +73,55 @@ h1 {
 .card {
   text-align: center;
   padding: 10px;
-  width: 300px;
+  width: 700px;
   border-radius: 5px;
   padding: 1em;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-img {
-  height: 100px;
-  width: auto;
+
+
+/* clamp styles */
+.clamp-lines {
+  border: 1px solid rgb(26, 57, 125);
+  border-radius: .25em;
+  font-family: sans-serif;
+  margin: 1em;
+  padding: .75em;
 }
 
+.clamp-lines > span {
+  display: block;
+}
+
+.clamp-lines__button {
+  background: none;
+  border: 0;
+  color: rgb(60, 150, 228);
+  cursor: pointer;
+  padding: 0;
+}
+
+.clamp-lines__button:hover {
+  border-bottom: 1px solid rgb(50, 133, 205);
+}
+
+/* clamp custom styles */
+.clamp-lines.custom-class {
+  background: rgb(255, 255, 255);
+}
+
+.clamp-lines.custom-class .clamp-lines__button {
+  background: rgb(63, 132, 236);
+  border: 1px solid transparent;
+  color: #eee;
+  display: block;
+  margin: .75em auto 0;
+  padding: .5em;
+  text-align: center;
+  transition: all .2s linear;
+  width: 100%;
+}
+
+.clamp-lines.custom-class .clamp-lines__button:hover {
+  background: rgb(37, 156, 235);
+}

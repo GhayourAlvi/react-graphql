@@ -1,6 +1,6 @@
 import react, { useState, useEffect, useContext } from "react";
 import "./App.css";
-import PostJobForm from "./Components/PostJobForm";
+import PostJobForm from "./Components/Forms/PostJobForm";
 import {
   ApolloClient,
   InMemoryCache,
@@ -9,13 +9,13 @@ import {
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import ViewJobForm from "./Components/ViewJobForm";
+
 import { JobsContext } from "./Contexts/JobsContext";
 import Container from "react-bootstrap/Container";
 import { Router, Routes, Route } from "react-router-dom";
 import Nav from "./Components/NavBar/Navbar";
-import Jobs from "./Components/Jobs";
-import Postjob from "./Components/Postjob"
+import Jobs from "./Components/Wrappers/Jobs";
+import Postjob from "./Components/Wrappers/Postjob"
 
 const errorLink = onError(({ graphqlErrors, networkError }) => {
   if (graphqlErrors) {

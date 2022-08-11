@@ -1,5 +1,5 @@
-import react, {useState, useEffect, useContext} from 'react';
-import '../App.css';
+
+import '../../App.css';
 
 import {
   ApolloClient,
@@ -9,7 +9,7 @@ import {
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import PostJobForm from './PostJobForm';
+import PostJobForm from '../Forms/PostJobForm';
 
 
 const errorLink = onError(({ graphqlErrors, networkError }) => {

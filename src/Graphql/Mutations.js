@@ -21,19 +21,10 @@ mutation postJob(
           applyUrl: $applyUrl
       }){
       id,
-      title
+      title,
+      locationNames,
+      userEmail,
+      applyUrl
   }
 }
 `;
-
-
-
-// export const CREATE_JOB = gql`
-//   mutation postJob($title: String!, $id: ID!, $slug: String!, $locationNames: String!,  $company: String,  $userEmail: String, $description: String, $applyUrl: String,) {
-//     postJob(title: $title, : $username, password: $password) {
-//       id
-//       name
-//       username
-//     }
-//   }
-// `;

@@ -8,8 +8,6 @@ function Navigationbar() {
             <Navbar bg="primary" variant="dark" expand="lg" fixed="top">
                 
                 <Container>
-
-                
                     <Navbar.Brand href="#home">Trimulabs Job Posting</Navbar.Brand>
                     <Nav className="me-auto">
                         <Nav.Link href="/view">View Jobs</Nav.Link>
